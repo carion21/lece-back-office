@@ -1,0 +1,117 @@
+<% extend('../base_admin') %>
+
+
+<!-- Light table with hoverable rows -->
+  <div class="row">
+    <div class="col-md-12">
+      <form action="<%= routedebase %>/user_management/settings" method="post">
+        <% if (locals.error) { %>
+          <div class="alert alert-danger">
+            <strong>Erreur!</strong> <%= locals.error %>
+          </div>
+        <% } %>
+
+        <h4>
+          Actifs cryptos
+        </h4>
+        <div class="row mb-3">
+          <div class="alert alert-info">
+            <strong>Information!</strong> Sélectionnez un ou plusieurs actifs cryptos pour lesquels vous souhaitez effectuer une recherche
+          </div>
+        </div>
+        <div class="row">
+          <% for (coin of coins) { %>
+            <div class="col-md-4">
+              <div class="form-check form-switch form-switch-success d-flex mb-4">
+                <input type="checkbox" id="<%= coin.code %>" name="coins" class="form-check-input flex-shrink-0" 
+                  value="<%= coin.alias %>"
+                  <% if (locals.rbody && rbody.coins.includes(coin.alias)) { %>checked<% } %>
+                  <% if (user_connected.settings && user_connected.settings.coins.includes(coin.alias)) { %>checked<% } %>
+                  <% if (!user_connected.settings && !locals.rbody) { %>checked<% } %>
+                  >
+                <label for="<%= coin.code %>" class="form-check-label ps-3">
+                  <span class="h6 mb-2">
+                    <%= coin.name %>
+                  </span>
+                  <br>
+                  <span class="fs-sm text-muted">
+                    <%= coin.code %>
+                  </span>
+                </label>
+              </div>
+            </div>
+          <% } %>
+        </div>
+        <hr>
+        <h4>
+          Devises
+        </h4>
+        <div class="row mb-3">
+          <div class="alert alert-info">
+            <strong>Information!</strong> Sélectionnez un ou plusieurs devises contre lesquelles les actifs cryptos sont cotés
+          </div>
+        </div>
+        <div class="row">
+          <% for (currency of currencies) { %>
+            <div class="col-md-4">
+              <div class="form-check form-switch form-switch-success d-flex mb-4">
+                <input type="checkbox" id="<%= currency %>" name="currencies" class="form-check-input flex-shrink-0" 
+                  value="<%= currency %>"
+                  <% if (locals.rbody && rbody.currencies.includes(currency)) { %>checked<% } %>
+                  <% if (user_connected.settings && user_connected.settings.currencies.includes(currency)) { %>checked<% } %>
+                  <% if (!user_connected.settings && !locals.rbody) { %>checked<% } %>
+                  >
+                <label for="<%= currency %>" class="form-check-label ps-3">
+                  <span class="h6 mb-2">
+                    <%= currency %>
+                  </span>
+                </label>
+              </div>
+            </div>
+          <% } %>
+        </div>
+        <hr>
+        <h4>
+          Exchanges
+        </h4>
+        <div class="row mb-3">
+          <div class="alert alert-info">
+            <strong>Information!</strong> Sélectionnez un ou plusieurs exchanges sur lesquels les actifs cryptos sont cotés
+          </div>
+        </div>
+        <div class="row">
+          <% for (exchange of exchanges) { %>
+            <div class="col-md-4">
+              <div class="form-check form-switch form-switch-success d-flex mb-4">
+                <input type="checkbox" id="exchange_<%= exchanges.indexOf(exchange) %>" name="exchanges" class="form-check-input flex-shrink-0" 
+                  value="<%= exchange %>"
+                  <% if (locals.rbody && rbody.exchanges.includes(exchange)) { %>checked<% } %>
+                  <% if (user_connected.settings && user_connected.settings.exchanges.includes(exchange)) { %>checked<% } %>
+                  <% if (!user_connected.settings && !locals.rbody) { %>checked<% } %>
+                  >
+                <label for="exchange_<%= exchanges.indexOf(exchange) %>" class="form-check-label ps-3">
+                  <span class="h6 mb-2">
+                    <%= exchange %>
+                  </span>
+                </label>
+              </div>
+            </div>
+          <% } %>
+        </div>
+        <hr>
+        <% if (locals.error) { %>
+          <div class="alert alert-danger">
+            <strong>Erreur!</strong> <%= locals.error %>
+          </div>
+        <% } %>
+        <div class="d-flex mt-3">
+          <button type="reset" class="btn btn-secondary me-3">
+            Annuler
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Sauvegarder les paramètres
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

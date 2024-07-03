@@ -1,0 +1,29 @@
+<% var b = book %>
+<div class="modal fade" id="deactive_<%=b.code %>" tabindex="-" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Livre No : <%= b.code %>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="alert alert-info">
+          Voulez-vous vraiment desactiver le livre  ``<b><%= b.title.toUpperCase() %></b>`` ???
+        </div>
+        
+      </div>
+
+      <div class="modal-footer">
+        <a class="btn btn-secondary btn-sm" href="<%= routedebase %>/book_management/deactivate_book/<%= b.id %>">
+          <i class="bx bxs-edit"></i> Confirmer
+        </a>
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

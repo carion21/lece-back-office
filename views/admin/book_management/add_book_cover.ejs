@@ -1,0 +1,51 @@
+<% extend('../base_admin') %>
+
+<!-- Basic info -->
+  <h2 class="h5 text-primary mb-4">
+    Première de couverture du livre 
+    <span class="text-capitalize bg-primary text-white p-1 ms-2">
+      <%= book.title %>
+    </span>
+  </h2>
+
+  <div class="alert alert-warning">
+    <strong>Attention!</strong> Les champs marqués d'un <span class="text-danger">*</span> sont obligatoires.
+  </div>
+
+  <form class="needs-validation border-bottom pb-3 pb-lg-4"
+    enctype="multipart/form-data"
+    action="<%= routedebase %>/book_management/add_book_cover/<%= book.id %>"
+    method="POST"
+    novalidate>
+
+    <% if (locals.error) { %>
+      <div class="alert alert-danger">
+        <strong>Erreur!</strong> <%= locals.error %>
+      </div>
+    <% } %>
+
+    <div class="row pb-2">
+      <div class="col-sm-12 mb-4">
+        <label for="cover" class="form-label fs-base">
+          Première de couverture
+          <span class="text-danger">*</span>
+        </label>
+        <input type="file" id="cover" class="form-control form-control-lg"
+          name="file"
+          accept="image/*"
+          required>
+        <div class="invalid-feedback">
+          S'il vous plaît sélectionnez une image!
+        </div>
+      </div>
+      
+    </div>
+    <div class="d-flex mb-3">
+      <button type="reset" class="btn btn-secondary me-3">
+        Annuler
+      </button>
+      <button type="submit" class="btn btn-primary">
+        Enregistrer
+      </button>
+    </div>
+  </form>

@@ -1,0 +1,54 @@
+<% extend('../base_admin') %>
+
+<!-- Basic info -->
+  <h2 class="h5 text-primary mb-4">
+    Informations de base
+  </h2>
+
+  <div class="alert alert-warning">
+    <strong>Attention!</strong> Les champs marqués d'un <span class="text-danger">*</span> sont obligatoires.
+  </div>
+
+  <form class="needs-validation border-bottom pb-3 pb-lg-4"
+    action="<%= routedebase %>/genre_management/edit_genre/<%= genre.id %>"
+    method="POST"
+    novalidate>
+
+    <% if (locals.error) { %>
+      <div class="alert alert-danger">
+        <strong>Erreur!</strong> <%= locals.error %>
+      </div>
+    <% } %>
+
+    <div class="row pb-2">
+      <div class="col-sm-12 mb-4">
+        <label for="name" class="form-label fs-base">
+          Nom
+          <span class="text-danger">*</span>
+        </label>
+        <input type="text" id="name" class="form-control form-control-lg"
+          name="name"
+          value="<% if (locals.rbody) { %><%= rbody.name %><% } else { %><%= genre.name %><% } %>"
+          required>
+        <div class="invalid-feedback">
+          S'il vous plaît entrez un nom!
+        </div>
+      </div>
+      <div class="col-sm-12 mb-4">
+        <label for="description" class="form-label fs-base">
+          Description
+        </label>
+        <textarea id="description" class="form-control form-control-lg"
+          name="description"
+          rows="4"><% if (locals.rbody) { %><%= rbody.description %><% } else if (locals.genre) { %><%= genre.description %><% } %></textarea>
+      </div>
+    </div>
+    <div class="d-flex mb-3">
+      <button type="reset" class="btn btn-secondary me-3">
+        Annuler
+      </button>
+      <button type="submit" class="btn btn-primary">
+        Enregistrer
+      </button>
+    </div>
+  </form>

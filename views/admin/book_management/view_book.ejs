@@ -1,0 +1,157 @@
+<% extend('../base_admin') %>
+
+<div class="row">
+  <div class="col-md-6 row">
+    <% if (book.coverUrl) { %>
+      <img src="<%= book.coverUrl %>" class="d-block" width="180"
+        alt="<%= book.title %>">
+    <% } else { %>
+      <img src="https://via.placeholder.com/720" class="d-block" width="180"
+        alt="<%= book.title %>">
+    <% } %>
+  </div>
+  <div class="col-md-6 justify-content-end">
+    <a class="btn btn-outline-primary px-3 px-sm-4 mb-2 col-12"
+      href="<%= routedebase %>/book_management/edit_book/<%= book.id %>">
+      <i class="bx bxs-edit fs-xl me-sm-1"></i>
+      <span class="d-none d-sm-inline">
+        Modifier des informations
+      </span>
+    </a>
+    <hr class="mb-2">
+    <a class="btn btn-outline-primary px-3 px-sm-4 mb-2 col-12"
+      href="<%= routedebase %>/book_management/add_book_cover/<%= book.id %>">
+      <i class="bx bxs-image fs-xl me-sm-1"></i>
+      <span class="d-none d-sm-inline">
+        <% if (book.coverUrl) { %>
+          Modifier la couverture
+        <% } else { %>
+          Ajouter une couverture
+        <% } %>
+      </span>
+    </a>
+    <hr class="mb-2">
+    <a class="btn btn-outline-primary px-3 px-sm-4 mb-2 col-12"
+      href="<%= routedebase %>/book_management/add_book_file/<%= book.id %>">
+      <i class="bx bxs-file-pdf fs-xl me-sm-1"></i>
+      <span class="d-none d-sm-inline">
+        <% if (book.fileUrl) { %>
+          Changer le fichier PDF
+        <% } else { %>
+          Ajouter un fichier PDF
+        <% } %>
+      </span>
+    </a>
+    <hr class="mb-2">
+    <% if (book.status) { %>
+      <button type="button" class="btn btn-outline-danger px-3 px-sm-4 mb-2 col-12"
+        data-bs-toggle="modal"
+        data-bs-target="#deactive_<%= book.code %>">
+        <i class="bx bx-x-circle fs-4"></i>
+        <span class="d-none d-sm-inline">
+          Desactiver le livre
+        </span>
+      </button>
+      <%- include('../components/deactive_book') %>
+    <% } else { %>
+      <button type="button" class="btn btn-outline-success px-3 px-sm-4 mb-2 col-12"
+        data-bs-toggle="modal"
+        data-bs-target="#active_<%= book.code %>">
+        <i class="bx bx-check fs-4"></i>
+        <span class="d-none d-sm-inline">
+          Activer le livre
+        </span>
+      </button>
+      <%- include('../components/active_book') %>
+    <% } %>
+    <hr>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <th>Code</th>
+            <td>
+              <%= book.code %>
+            </td>
+          </tr>
+          <tr>
+            <th>Titre</th>
+            <td>
+              <%= book.title %>
+            </td>
+          </tr>
+          <tr>
+            <th>Genre(s)</th>
+            <td>
+              <% for (genre of book.genres) { %>
+                <span class="badge bg-primary">
+                  <%= genre.name %>
+                </span>
+              <% } %>
+            </td>
+          </tr>
+          <tr>
+            <th>Auteur(e)</th>
+            <td>
+              <a class="btn btn-link text-start p-0 text-capitalize fw-bold"
+                href="<%= routedebase %>/author_management/view_author/<%= book.author.id %>">
+                <%= book.author.name %>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <th>Pages</th>
+            <td>
+              <%= book.pages %>
+            </td>
+          </tr>
+          <tr>
+            <th>Date de parution</th>
+            <td>
+              <% if (book.releaseDate) { %>
+                <%= moment(book.releaseDate).format('DD/MM/YYYY') %>
+              <% } else { %>
+                <span class="badge bg-secondary">Non renseigné</span>
+              <% } %>
+            </td>
+          </tr>
+          <tr>
+            <th>Créé le</th>
+            <td>
+              <%= moment(book.createdAt).format('DD/MM/YYYY') %>
+            </td>
+          </tr>
+          <tr>
+            <th>Statut</th>
+            <td>
+              <% if (book.status) { %>
+                <span class="badge bg-success">Actif</span>
+                <% } else { %>
+                  <span class="badge bg-danger">Inactif</span>
+                  <% } %>
+            </td>
+          </tr>
+          <tr>
+            <th>Administrateur</th>
+            <td>
+              <%= book.editor.lastname.toUpperCase() %>
+                <%= book.editor.firstname.toUpperCase() %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <hr class="my-4">
+  <div class="col-sm-12 mb-4">
+    <label for="summary" class="form-label fs-base">
+      Resumé
+      <span class="text-danger">*</span>
+    </label>
+    <textarea id="summary" class="form-control form-control-lg"
+      name="summary"
+      rows="4" readonly><%= book.summary %></textarea>
+  </div>
+</div>

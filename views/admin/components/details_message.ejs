@@ -1,0 +1,74 @@
+<div class="modal fade" id="details_<%=m.code %>" tabindex="-" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Message No : <%= m.code %>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+          <!-- Light table with hoverable rows -->
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <tbody>
+                <tr>
+                  <th>Code</th>
+                  <td><%= m.code %></td>
+                </tr>
+                <tr>
+                  <th>Nom</th>
+                  <td><%= m.name %></td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td><%= m.email %></td>
+                </tr>
+                <tr>
+                  <th>Sujet</th>
+                  <td><%= m.subject %></td>
+                </tr>
+                </tr>
+                  <th>Reçu le</th>
+                  <td><%= moment(m.createdAt).format('DD/MM/YYYY') %></td>
+                </tr>
+                <tr>
+                  <th>Statut</th>
+                  <td>
+                    <% if (m.readerId) { %>
+                      <span class="badge bg-primary">Déja lu</span>
+                      par 
+                      <b>
+                        <%= m.reader.lastname.toUpperCase() %> <%= m.reader.firstname.toUpperCase() %>
+                      </b>
+                    <% } else { %>
+                      <span class="badge bg-warning">Non lu</span>
+                    <% } %>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Contenu</th>
+                  <td>
+                    <%= m.content %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+        <div class="modal-footer">
+          <% if (!m.readerId) { %>
+            <a class="btn btn-secondary btn-sm" href="<%= routedebase %>/message_management/read_message/<%= m.id %>">
+              <i class="bx bxs-check-circle"></i>
+              Marquer comme lu
+            </a>
+          <% } %>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

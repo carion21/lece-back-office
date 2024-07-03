@@ -1,0 +1,160 @@
+<% extend('../base_admin') %>
+
+<div class="row">
+  <div class="col-md-8">
+    <img src="<%= author.photoUrl %>" class="d-block" width="180"
+        alt="<%= author.name %>">
+  </div>
+  <div class="col-md-4 justify-content-end">
+    <a class="btn btn-outline-primary px-3 px-sm-4 mb-2 col-12"
+      href="<%= routedebase %>/author_management/edit_author/<%= author.id %>">
+      <i class="bx bxs-edit fs-xl me-sm-1"></i>
+      <span class="d-none d-sm-inline">
+        Modifier l'auteur
+      </span>
+    </a>
+    <hr class="mb-2">
+    <% if (author.status) { %>
+      <button type="button" class="btn btn-outline-danger px-3 px-sm-4 mb-2 col-12"
+        data-bs-toggle="modal"
+        data-bs-target="#deactive_<%= author.code %>">
+        <i class="bx bx-x-circle fs-4"></i>
+        <span class="d-none d-sm-inline">
+          Desactiver l'auteur
+        </span>
+      </button>
+      <%- include('../components/deactive_author') %>
+    <% } else { %>
+      <button type="button" class="btn btn-outline-success px-3 px-sm-4 mb-2 col-12"
+        data-bs-toggle="modal"
+        data-bs-target="#active_<%= author.code %>">
+        <i class="bx bx-check fs-4"></i>
+        <span class="d-none d-sm-inline">
+          Activer l'auteur
+        </span>
+      </button>
+      <%- include('../components/active_author') %>
+    <% } %>
+  </div>
+</div>
+
+<div class="row">
+  <hr>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <th>Code</th>
+          <td>
+            <%= author.code %>
+          </td>
+        </tr>
+        <tr>
+          <th>Nom</th>
+          <td>
+            <%= author.name %>
+          </td>
+        </tr>
+        <tr>
+          <th>Slug</th>
+          <td>
+            <%= author.slug %>
+          </td>
+        </tr>
+        <tr>
+          <th>Nb. Livres</th>
+          <td>
+            <%= author.books.length %>
+          </td>
+        </tr>
+        <tr>
+          <th>Créé le</th>
+          <td>
+            <%= moment(author.createdAt).format('DD/MM/YYYY') %>
+          </td>
+        </tr>
+        <tr>
+          <th>Statut</th>
+          <td>
+            <% if (author.status) { %>
+              <span class="badge bg-success">Actif</span>
+              <% } else { %>
+                <span class="badge bg-danger">Inactif</span>
+                <% } %>
+          </td>
+        </tr>
+        <tr>
+          <th>Administrateur</th>
+          <td>
+            <%= author.editor.lastname.toUpperCase() %>
+              <%= author.editor.firstname.toUpperCase() %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <hr class="my-4">
+  <div class="col-sm-12 mb-4">
+    <label for="biography" class="form-label fs-base">
+      Biographie
+      <span class="text-danger">*</span>
+    </label>
+    <textarea id="biography" class="form-control form-control-lg"
+      name="biography"
+      rows="4" readonly><%= author.biography %></textarea>
+  </div>
+</div>
+<% var books = author.books %>
+<div class="row">
+  <hr class="my-4">
+  <% if (books.length == 0) { %>
+    <div class="alert alert-warning" role="alert">
+      Aucun livre n'a été trouvé.
+    </div>
+  <% } else { %>
+    <!-- Light table with hoverable rows -->
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Nom</th>
+            <th>Statut</th>
+            <th>Détails</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% for (b of books) { %>
+              <tr>
+                <th scope="row">
+                  <%= books.indexOf(b) + 1 %>
+                </th>
+                <td>
+                  <%= b.code %>
+                </td>
+                <td>
+                  <%= b.title.toUpperCase() %>
+                </td>
+                <td>
+                  <% if (b.status) { %>
+                    <span class="badge bg-success">Actif</span>
+                  <% } else { %>
+                    <span class="badge bg-danger">Inactif</span>
+                  <% } %>
+                </td>
+                <td>
+                  <a class="btn btn-sm btn-outline-secondary"
+                    href="<%= routedebase %>/book_management/view_book/<%= b.id %>">
+                    <i class="bx bxs-detail fs-4"></i>
+                  </a>
+                </td>
+              </tr>
+            <% } %> 
+          </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>

@@ -1,0 +1,80 @@
+<% extend('../base_admin') %>
+
+<div class="row justify-content-end">
+  <div class="col-md-4">
+    <a class="btn btn-outline-primary px-3 px-sm-4 mb-2 col-12"
+      href="<%= routedebase %>/genre_management/new_genre">
+      <i class="bx bx-layer-plus fs-xl me-sm-1"></i>
+      <span class="d-none d-sm-inline">
+        Ajouter un genre
+      </span>
+    </a>
+  </div>
+</div>
+
+<% if (!locals.genres) { %>
+  <div class="alert alert-danger" role="alert">
+    Une erreur s'est produite lors de la récupération des genres.
+  </div>
+<% } else if (locals.genres && genres.length == 0) { %>
+  <div class="alert alert-warning" role="alert">
+    Aucun genre n'a été trouvé.
+  </div>
+<% } else { %>
+  <!-- Light table with hoverable rows -->
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Code</th>
+          <th>Nom</th>
+          <th>Statut</th>
+          <th>Détails</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% for (g of genres) { %>
+            <tr>
+              <th scope="row">
+                <%= genres.indexOf(g) + 1 %>
+              </th>
+              <td>
+                <%= g.code %>
+              </td>
+              <td>
+                <%= g.name %>
+              </td>
+              <td class="row">
+                <% if (g.status) { %>
+                  <span class="badge bg-success">Actif</span>
+                  <button type="button" class="btn btn-sm btn-outline-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deactive_<%= g.code %>">
+                    <i class="bx bxs-x-circle fs-4"></i>
+                  </button>
+                  <%- include('../components/deactive_genre') %>
+                <% } else { %>
+                  <span class="badge bg-danger">Inactif</span>
+                  <button type="button" class="btn btn-sm btn-outline-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#active_<%= g.code %>">
+                    <i class="bx bx-check fs-4"></i>
+                  </button>
+                  <%- include('../components/active_genre') %>
+                <% } %>
+              </td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#details_<%= g.code %>">
+                  <i class="bx bxs-detail fs-4"></i>
+                </button>
+                <%- include('../components/details_genre') %>
+              </td>
+            </tr>
+          <% } %> 
+        </tbody>
+    </table>
+  </div>
+<% } %>

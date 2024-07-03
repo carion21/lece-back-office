@@ -1,0 +1,52 @@
+<% extend('../base_admin') %>
+
+<% if (!locals.subscribers) { %>
+  <div class="alert alert-danger" role="alert">
+    Une erreur s'est produite lors de la récupération des abonnés.
+  </div>
+<% } else if (locals.subscribers && subscribers.length == 0) { %>
+  <div class="alert alert-warning" role="alert">
+    Aucun abonné n'a été trouvé.
+  </div>
+<% } else { %>
+  <!-- Light table with hoverable rows -->
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Code</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Détails</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% for (s of subscribers) { %>
+            <tr>
+              <th scope="row">
+                <%= subscribers.indexOf(s) + 1 %>
+              </th>
+              <td>
+                <%= s.code %>
+              </td>
+              <td>
+                <%= s.name %>
+              </td>
+              <td>
+                <%= s.email %>
+              </td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#details_<%= s.code %>">
+                  <i class="bx bxs-detail fs-4"></i>
+                </button>
+                <%- include('../components/details_subscriber') %>
+              </td>
+            </tr>
+          <% } %> 
+        </tbody>
+    </table>
+  </div>
+<% } %>

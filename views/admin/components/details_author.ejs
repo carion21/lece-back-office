@@ -1,0 +1,97 @@
+<div class="modal fade" id="details_<%=a.code %>" tabindex="-" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Auteur No : <%= a.code %>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Light table with hoverable rows -->
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th>Code</th>
+                <td><%= a.code %></td>
+              </tr>
+              <tr>
+                <th>Nom</th>
+                <td><%= a.name %></td>
+              </tr>
+              <tr>
+                <th>Slug</th>
+                <td><%= a.slug %></td>
+              </tr>
+              <tr>
+                <th>Nb. Livres</th>
+                <td>
+                  <%= a.bookCount %> | 
+                  <% if (a.bookCount > 0) { %>
+                    <a class="btn btn-sm btn-outline-secondary"
+                      href="<%= routedebase %>/author_management/book_list/<%= a.id %>">
+                      <i class="bx bxs-book"></i> Voir les livres
+                    </a>
+                  <% } %>
+                </td>
+              </tr>
+              <tr><div class="col-md-6 col-lg-4 d-flex">
+                        <div class="book-wrap d-lg-flex">
+                            <div class="img d-flex justify-content-end"
+                                style="background-image: url(<%= b.coverUrl || '/images/book-1.jpg' %>);">
+                            </div>
+                            <div class="text p-4">
+                                <h2>
+                                    <a href="/book/view/<%= b.slug %>">
+                                        <%= b.title %>
+                                    </a>
+                                </h2>
+                                <span class="position">
+                                    <a style="color: black;"
+                                        href="/author/view/<%= b.author.slug %>">De <%= b.author.name %>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                <th>Biographie</th>
+                <td><%= a.biography %></td>
+              </tr>
+              <tr>
+                <th>Créé le</th>
+                <td><%= moment(a.createdAt).format('DD/MM/YYYY') %></td>
+              </tr>
+              <tr>
+                <th>Statut</th>
+                <td>
+                  <% if (a.status) { %>
+                    <span class="badge bg-success">Actif</span>
+                  <% } else { %>
+                    <span class="badge bg-danger">Inactif</span>
+                  <% } %>
+                </td>
+              </tr>
+              <tr>
+                <th>Administrateur</th>
+                <td>
+                  <%= a.editor.lastname %> <%= a.editor.firstname %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a class="btn btn-secondary btn-sm" href="<%= routedebase %>/genre_management/edit_genre/<%= a.id %>">
+          <i class="bx bxs-edit"></i> Modifier
+        </a>
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

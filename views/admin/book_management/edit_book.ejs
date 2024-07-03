@@ -1,0 +1,125 @@
+<% extend('../base_admin') %>
+
+<!-- Basic info -->
+  <h2 class="h5 text-primary mb-4">
+    Informations de base
+  </h2>
+
+  <div class="alert alert-warning">
+    <strong>Attention!</strong> Les champs marqués d'un <span class="text-danger">*</span> sont obligatoires.
+  </div>
+
+  <form class="needs-validation border-bottom pb-3 pb-lg-4"
+    action="<%= routedebase %>/book_management/edit_book/<%= book.id %>"
+    method="POST"
+    novalidate>
+
+    <% if (locals.error) { %>
+      <div class="alert alert-danger">
+        <strong>Erreur!</strong> <%= locals.error %>
+      </div>
+    <% } %>
+
+    <div class="row pb-2">
+      <div class="col-sm-12 mb-4">
+        <label for="author" class="form-label fs-base">
+          Auteur
+          <span class="text-danger">*</span>
+        </label>
+        <select id="author" class="form-select form-select-lg"
+          name="author"
+          required>
+          <option value="" selected disabled>
+            Sélectionnez un auteur
+          </option>
+          <% for (a of authors) { %>
+            <option value="<%= a.id %>"
+              <% if (locals.rbody && rbody.author == a.id) { %>selected<% } else if (book.author.id == a.id) { %>selected<% } %>>
+              <%= a.name %>
+            </option>
+          <% } %>
+        </select>
+        <div class="invalid-feedback">
+          S'il vous plaît sélectionnez un auteur!
+        </div>
+      </div>
+      <div class="col-sm-12 mb-4">
+        <label for="name" class="form-label fs-base">
+          Nom
+          <span class="text-danger">*</span>
+        </label>
+        <input type="text" id="title" class="form-control form-control-lg"
+          name="title"
+          value="<% if (locals.rbody) { %><%= rbody.title %><% } else { %><%= book.title %><% } %>"
+          required>
+        <div class="invalid-feedback">
+          S'il vous plaît entrez un titre!
+        </div>
+      </div>
+      <div class="col-sm-4 mb-4">
+        <label for="pages" class="form-label fs-base">
+          Pages
+          <span class="text-danger">*</span>
+        </label>
+        <input type="number" id="pages" class="form-control form-control-lg"
+          name="pages"
+          value="<% if (locals.rbody) { %><%= rbody.pages %><% } else { %><%= book.pages %><% } %>"
+          required>
+        <div class="invalid-feedback">
+          S'il vous plaît entrez un nombre de pages!
+        </div>
+      </div>
+      <div class="col-sm-8 mb-4">
+        <label for="release_date" class="form-label
+          fs-base">
+          Date de parution
+          <span class="text-danger">*</span>
+        </label>
+        <input type="date" id="release_date" class="form-control form-control-lg"
+          name="release_date"
+          value="<% if (locals.rbody) { %><%= rbody.release_date %><% } else { %><%= book.release_date %><% } %>"
+          required>
+        <div class="invalid-feedback">
+          S'il vous plaît entrez une date de parution!
+        </div>
+      </div>
+      <div class="col-sm-12 mb-4">
+        <label for="summary" class="form-label fs-base">
+          Resumé
+          <span class="text-danger">*</span>
+        </label>
+        <textarea id="summary" class="form-control form-control-lg"
+          name="summary"
+          rows="4"><% if (locals.rbody) { %><%= rbody.summary %><% } else { %><%= book.summary %><% } %></textarea>
+      </div>
+      <div class="col-sm-12 mb-4">
+        <label for="genres" class="form-label fs-base">
+          Genre(s)
+          <span class="text-danger">*</span>
+          <span class="text-muted">(Sélectionnez plusieurs en maintenant la touche Ctrl/Cmd enfoncée)</span>
+        </label>
+        <select id="genres" class="form-select form-select-lg"
+          name="genres"
+          multiple
+          required>
+          <% for (g of genres) { %>
+            <option value="<%= g.id %>"
+              <% if (locals.rbody && rbody.genres.includes(g.id)) { %>selected<% } else if (book.genres.map(g => g.id).includes(g.id)) { %>selected<% } %>>
+              <%= g.name %>
+            </option>
+          <% } %>
+        </select>
+        <div class="invalid-feedback">
+          S'il vous plaît sélectionnez un genre!
+        </div>
+      </div>
+    </div>
+    <div class="d-flex mb-3">
+      <button type="reset" class="btn btn-secondary me-3">
+        Annuler
+      </button>
+      <button type="submit" class="btn btn-primary">
+        Enregistrer
+      </button>
+    </div>
+  </form>
