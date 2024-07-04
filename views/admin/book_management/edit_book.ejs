@@ -77,7 +77,7 @@
         </label>
         <input type="date" id="release_date" class="form-control form-control-lg"
           name="release_date"
-          value="<% if (locals.rbody) { %><%= rbody.release_date %><% } else { %><%= book.release_date %><% } %>"
+          value="<% if (locals.rbody) { %><%= rbody.release_date %><% } else { %><%= moment(book.releaseDate).format('YYYY-MM-DD') %><% } %>"
           required>
         <div class="invalid-feedback">
           S'il vous plaît entrez une date de parution!

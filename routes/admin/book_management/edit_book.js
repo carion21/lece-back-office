@@ -54,6 +54,8 @@ router.get('/:id', async function (req, res, next) {
       authors = authors.filter(author => author.status === true)
     }
 
+    console.log(book);
+
     res.render(
       profile + "/book_management/edit_book", {
       appName: APP_NAME,
