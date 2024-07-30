@@ -41,6 +41,12 @@ class TabSidebase {
         ]
       ),
       BlocSidebare.nouveauBloc(
+        "gestion des soumissions",
+        [
+          ElementSidebare.nouveauElement("Soumissions", DEFAULT_ROUTE_ADMIN + "/submission_management/submission_list", "submission_management/submission_list", "bx bx-book-content", 0),
+        ]
+      ),
+      BlocSidebare.nouveauBloc(
         "gestion des abonnés",
         [
           ElementSidebare.nouveauElement("Abonnés", DEFAULT_ROUTE_ADMIN + "/subscriber_management/subscriber_list", "subscriber_management/subscriber_list", "bx bx-user-voice", 0),

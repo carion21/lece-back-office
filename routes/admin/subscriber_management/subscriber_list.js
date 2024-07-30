@@ -14,7 +14,7 @@ const SERVICE_TYPE = "subscriber_list"
 
 const profile = DEFAULT_PROFILE_ADMIN;
 const tabside = getTabSideBase(profile)
-const idbloc = 4
+const idbloc = 5
 const blocname = tabside[idbloc].texte
 const pagename = "Liste des abonnés"
 const template = "subscriber_list"

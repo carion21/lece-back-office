@@ -1198,6 +1198,71 @@ const core_read_message = (async (jwt_token, message_id) => {
   return result
 })
 
+const core_list_submission = (async (jwt_token) => {
+  let result = {
+    success: false
+  }
+
+  let error = ""
+
+  let urlcomplete = urlapi + process.env.ROUTE_OF_CORE_FOR_BOOK_SUBMISSION
+  try {
+    let response = await axios.get(urlcomplete, {
+      headers: {
+        'Authorization': 'Bearer ' + jwt_token
+      }
+    })
+    if (response.status == 200) {
+      let rdata = response.data
+      result.success = true
+      result.data = rdata.data
+    } else {
+      error = response.data.message
+    }
+  } catch (err) {
+    error = err.message
+  }
+
+  if (error != "") {
+    result.message = error
+  }
+
+  return result
+})
+
+const core_view_submission = (async (jwt_token, submission_id) => {
+  let result = {
+    success: false
+  }
+
+  let error = ""
+
+  let urlcomplete = urlapi + process.env.ROUTE_OF_CORE_FOR_BOOK_SUBMISSION
+  urlcomplete += "/" + submission_id.toString()
+  try {
+    let response = await axios.patch(urlcomplete, {}, {
+      headers: {
+        'Authorization': 'Bearer ' + jwt_token
+      }
+    })
+    if (response.status == 200) {
+      let rdata = response.data
+      result.success = true
+      result.data = rdata.data
+    } else {
+      error = response.data.message
+    }
+  } catch (err) {
+    error = err.message
+  }
+
+  if (error != "") {
+    result.message = error
+  }
+
+  return result
+})
+
 module.exports = {
   control_service_data,
   core_signin,
@@ -1225,5 +1290,7 @@ module.exports = {
   core_delete_book,
   core_list_subscriber,
   core_list_message,
-  core_read_message
+  core_read_message,
+  core_list_submission,
+  core_view_submission
 }

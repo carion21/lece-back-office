@@ -14,7 +14,7 @@ const SERVICE_TYPE = "admin_security"
 
 const profile = DEFAULT_PROFILE_ADMIN;
 const tabside = getTabSideBase(profile)
-const idbloc = 6
+const idbloc = 7
 const blocname = tabside[idbloc].texte
 const pagename = "Sécurité"
 const template = "security"

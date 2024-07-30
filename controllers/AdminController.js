@@ -29,6 +29,9 @@ const view_book = require('../routes/' + service + '/book_management/view_book')
 const activate_book = require('../routes/' + service + '/book_management/activate_book')
 const deactivate_book = require('../routes/' + service + '/book_management/deactivate_book')
 
+const submission_list = require('../routes/' + service + '/submission_management/submission_list')
+const view_submission = require('../routes/' + service + '/submission_management/view_submission')
+
 const subscriber_list = require('../routes/' + service + '/subscriber_management/subscriber_list')
 
 const message_list = require('../routes/' + service + '/message_management/message_list')
@@ -62,6 +65,9 @@ router.use('/book_management/edit_book', edit_book)
 router.use('/book_management/view_book', view_book)
 router.use('/book_management/activate_book', activate_book)
 router.use('/book_management/deactivate_book', deactivate_book)
+
+router.use('/submission_management/submission_list', submission_list)
+router.use('/submission_management/view_submission', view_submission)
 
 router.use('/subscriber_management/subscriber_list', subscriber_list)
 

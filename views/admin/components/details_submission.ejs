@@ -1,9 +1,9 @@
-<div class="modal fade" id="details_<%=m.code %>" tabindex="-" role="dialog">
+<div class="modal fade" id="details_<%=s.code %>" tabindex="-" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            Message No : <%= m.code %>
+            Soumission No : <%= s.code %>
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -15,46 +15,55 @@
               <tbody>
                 <tr>
                   <th>Code</th>
-                  <td><%= m.code %></td>
+                  <td><%= s.code %></td>
                 </tr>
                 <tr>
-                  <th>Nom</th>
-                  <td><%= m.name %></td>
+                  <th>Auteur</th>
+                  <td><%= s.name %></td>
                 </tr>
                 <tr>
                   <th>Email</th>
-                  <td><%= m.email %></td>
+                  <td><%= s.email %></td>
                 </tr>
                 <tr>
-                  <th>Téléphone</th>
-                  <td><%= m.phone %></td>
+                  <th>Telephone</th>
+                  <td><%= s.phone %></td>
                 </tr>
                 <tr>
-                  <th>Sujet</th>
-                  <td><%= m.subject %></td>
+                  <th>Titre</th>
+                  <td><%= s.title %></td>
                 </tr>
                 </tr>
                   <th>Reçu le</th>
-                  <td><%= moment(m.createdAt).format('DD/MM/YYYY') %></td>
+                  <td><%= moment(s.createdAt).format('DD/MM/YYYY') %></td>
                 </tr>
                 <tr>
                   <th>Statut</th>
                   <td>
-                    <% if (m.readerId) { %>
-                      <span class="badge bg-primary">Déja lu</span>
+                    <% if (s.viewerId) { %>
+                      <span class="badge bg-primary">Déja vu</span>
                       par 
                       <b>
-                        <%= m.reader.lastname.toUpperCase() %> <%= m.reader.firstname.toUpperCase() %>
+                        <%= s.viewer.lastname.toUpperCase() %> <%= s.viewer.firstname.toUpperCase() %>
                       </b>
                     <% } else { %>
-                      <span class="badge bg-warning">Non lu</span>
+                      <span class="badge bg-warning">Non vu</span>
                     <% } %>
                   </td>
                 </tr>
                 <tr>
-                  <th>Contenu</th>
+                  <th>Document</th>
                   <td>
-                    <%= m.content %>
+                    <a href="<%= s.fileUrl %>" target="_blank">
+                      <i class="bx bxs-file-pdf"></i>
+                      <%= s.file %>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Resumé</th>
+                  <td>
+                    <%= s.summary %>
                   </td>
                 </tr>
               </tbody>
@@ -63,10 +72,10 @@
         </div>
   
         <div class="modal-footer">
-          <% if (!m.readerId) { %>
-            <a class="btn btn-secondary btn-sm" href="<%= routedebase %>/message_management/read_message/<%= m.id %>">
+          <% if (!s.readerId) { %>
+            <a class="btn btn-secondary btn-sm" href="<%= routedebase %>/submission_management/view_submission/<%= s.id %>">
               <i class="bx bxs-check-circle"></i>
-              Marquer comme lu
+              Marquer comme vu
             </a>
           <% } %>
           <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
